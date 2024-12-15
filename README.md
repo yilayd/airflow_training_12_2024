@@ -15,7 +15,7 @@ To complete this course you will need:
 3. [A GitHub account](https://github.com/signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F&source=header-home) (for use with GitHub Codespaces) 
 4. Optional: A locally running instance of Docker Desktop if you would prefer to run Airflow locally. (We generally recommend the use of GitHub in the training to avoid setup issues)
 
-
+💬 A chat has been setup for our group and can be found at https://bit.ly/airflow_ftw (you will have been invited if you've shared your Google Cloud account with the trainer)
 
 # ⏰ Schedule
 
