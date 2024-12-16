@@ -7,6 +7,9 @@ from airflow.models import DAG
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
 
+
+API_URL = "https://lldev.thespacedevs.com/2.3.0/launches"
+
 def _download_launches(**context):
     templates_dict = context["templates_dict"]
     output_path = Path(templates_dict["output_path"])
