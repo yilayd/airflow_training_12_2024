@@ -20,5 +20,5 @@ my_dag = DAG(
     
 print_context = PythonOperator(
     task_id="print_context",
-    python_callable=print_context_func, dag = my_dag, templates_dict = [1,2,3,4]
+    python_callable=print_context_func, dag = my_dag, templates_dict = {'numbers':[1,2,3,4]}
 )
