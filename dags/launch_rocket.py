@@ -6,9 +6,9 @@ from airflow.operators.empty import EmptyOperator
 
 with DAG(
     dag_id = 'launch_rocket',
-    start_nate = datetime.now() - timedelta(days=1),
+    start_date = datetime.now() - timedelta(days=1),
     description = "Empty operators",
-    schedule = '@daily'
+    schedule = '@daily',
 ):
 
     procure_rocket_material = EmptyOperator(task_id = 'Rocket material is procured') 
