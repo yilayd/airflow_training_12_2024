@@ -19,7 +19,7 @@ print_context = PythonOperator(
 
 with DAG(
     dag_id="context_print",
-    start_date=datetime.now() - timedelta(days=4)
+    start_date=datetime.now() - timedelta(days=4),
     schedule_interval="@daily",
     tags=["exercise"],
 )
