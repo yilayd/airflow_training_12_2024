@@ -5,8 +5,7 @@ from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
 from pprint import pprint
 
-def print_context_func(numbers, **context):
-    print(numbers[0])
+def print_context_func(**context):
     pprint(context)
 
 
@@ -20,5 +19,5 @@ my_dag = DAG(
     
 print_context = PythonOperator(
     task_id="print_context",
-    python_callable=print_context_func, dag = my_dag, templates_dict = {'numbers':[1,2,3,4]}
+    python_callable=print_context_func, dag = my_dag, op_kwargs = [1,2,3,4]
 )
