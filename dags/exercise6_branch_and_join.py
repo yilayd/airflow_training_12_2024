@@ -27,9 +27,8 @@ with DAG(
 
     do_something >> branching
 
-    for day in days:
-        branching >> EmptyOperator(
-            task_id=day
-        ) >> EmptyOperator(
-            task_id='next', trigger_rule = 'none_failed_min_one_success'
-    )
+    
+    daily_tasks = [EmptyOperator(task_id=f"{day}") for day in days]    
+         
+    next_task = EmptyOperator(task_id='next', trigger_rule = 'none_failed_min_one_success')
+    branching >>daily_task >>next_task 
