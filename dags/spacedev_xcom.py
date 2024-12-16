@@ -25,7 +25,7 @@ def _download_launches(**context):
 
     with output_path.open("w") as file_:
         json.dump(response.json(), file_)
-
+    ti.xcom_push(key='launch_data_x', value = output_path)
 
 def _print_launch_count(**context):
     # TODO: Finish this task. Should load the launch JSON file
