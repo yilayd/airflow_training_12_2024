@@ -39,7 +39,7 @@ with DAG(
     schedule_interval="@daily",
 ):
 
-    echo_logical_date = BashOperator(task_id = 'print_logical_date', bash_command = "echo context['ts']")
+    echo_logical_date = BashOperator(task_id = 'print_logical_date', bash_command = "echo {{ ts }}")
 
     launch_data = PythonOperator(task_id = 'fetch_launch_data', python_callable = _download_launches)
 
