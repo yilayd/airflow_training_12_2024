@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from airflow.models import DAG
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
-
+import pprint
 
 def print_context_func(**context):
     pprint(context)
