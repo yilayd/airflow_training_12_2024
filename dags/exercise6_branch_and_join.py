@@ -29,5 +29,7 @@ with DAG(
 
     for day in days:
         branching >> EmptyOperator(
-            task_id=day, trigger_rule = 'none_failed_min_one_success'
-        )
+            task_id=day
+        ) >> EmptyOperator(
+            task_id='next', trigger_rule = 'none_failed_min_one_success'
+    )
