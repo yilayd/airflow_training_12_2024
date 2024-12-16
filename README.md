@@ -74,3 +74,15 @@ The course will loosely follow this schedule:
 
     <img src="images/README/image-20241211093816422.png" alt="image-20241211093816422" style="zoom:50%;" />
 
+# Virtual environment
+
+Setup a virtual environment as follows:
+In the terminal run:
+```sh
+python -m venv .venv
+```
+
+Then
+```
+source ./.venv/bin/activate
+```
