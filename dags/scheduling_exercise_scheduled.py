@@ -6,7 +6,7 @@ from airflow.operators.empty import EmptyOperator
 
 
 with DAG(
-    dag_id = 'launch_rocket_scheduler',
+    dag_id = 'launch_rocket_scheduler_days',
     start_date = datetime.now() - timedelta(days=90),
     description = "Empty operators",
     schedule = '45 13 * * 2,4,6',
