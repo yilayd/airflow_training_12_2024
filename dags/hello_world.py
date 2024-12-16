@@ -6,7 +6,7 @@ from airflow.operators.python import PythonOperator
 with DAG(
     dag_id = 'hello_world',
     start_date = datetime.now() - timedelta(days=14),
-    description = 'This DAG will print Hello and World'
+    description = 'This DAG will print Hello and World',
     schedule = "@daily",
 ):
 
