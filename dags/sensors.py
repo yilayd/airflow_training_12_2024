@@ -12,7 +12,7 @@ with DAG(
     schedule = "@daily",
 ):
 
-    check_data = HttpSensor(http_conn_id = 'http_delayed', mode = 'reschedule', extra_options = {'check_response': 20000})
+    check_data = HttpSensor(http_conn_id = 'http_delayed', mode = 'reschedule', end_point = 'https://httpstat.us/200?sleep=20000' extra_options = {'check_response': 20000})
 
     run_something = PythonOperator(task_id = 'doing_stuff', python_callable = lambda x: print('doing it for', {{ ts }}))
 
