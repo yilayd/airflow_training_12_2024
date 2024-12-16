@@ -10,7 +10,6 @@ API_URL = "https://lldev.thespacedevs.com/2.3.0/launches"
 
 def _download_launches(ti, **context):
     templates_dict = context["templates_dict"]
-    output_path = Path(templates_dict["output_path"])
 
     response = requests.get(
         API_URL,
