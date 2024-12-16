@@ -7,7 +7,7 @@ from airflow.models import DAG
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
 
-API_URL = "https://lldev.thespacedevs.com/2.3.0/launch"
+API_URL = "https://lldev.thespacedevs.com/2.3.0/launches"
 
 
 with DAG(
