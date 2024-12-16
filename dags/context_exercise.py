@@ -16,8 +16,8 @@ def _download_launches(**context):
     response = requests.get(
         API_URL,
         params={
-            "window_start__gte": templates_dict["date_interval_start"],
-            "window_end__lt": templates_dict["date_interval_end"],
+            "window_start__gte": context["date_interval_start"],
+            "window_end__lt": context["date_interval_end"],
         },
     )
     response.raise_for_status()
