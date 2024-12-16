@@ -20,6 +20,8 @@ with DAG(
     procure_rocket_material = EmptyOperator(task_id = 'rocket_material_is_procured') 
 
     python = PythonOperator(task_id = 'python1', python_callable = some_function)
+
+    python2  = [PythonOperator(task_id = f"python{i}", python_callable = lambda: print(f"{i})" ) for i in range(2,10,2))]
     procure_fuel = EmptyOperator(task_id = 'rocket_is_fueled') 
 
     build_stage_1 = EmptyOperator(task_id = 'building_stage_1') 
@@ -33,5 +35,5 @@ with DAG(
 
     procure_rocket_material >> [build_stage_1, build_stage_2, build_stage_3] >> launch
 
-    procure_fuel >> build_stage_3 >> launch >> python
+    procure_fuel >> build_stage_3 >> launch >> python >> python2
 
