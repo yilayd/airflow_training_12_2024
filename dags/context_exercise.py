@@ -12,12 +12,13 @@ API_URL = "https://lldev.thespacedevs.com/2.3.0/launches"
 
 def _download_launches(**context):
     templates_dict = context["templates_dict"]
-    
+    output_path = Path(templates_dict["output_path"])
+
     response = requests.get(
         API_URL,
         params={
-            "window_start__gte": context["date_interval_start"],
-            "window_end__lt": context["date_interval_end"],
+            "window_start__gte": templates_dict["window_start"],
+            "window_end__lt": templates_dict["window_end"],
         },
     )
     response.raise_for_status()
@@ -26,15 +27,17 @@ def _download_launches(**context):
     with output_path.open("w") as file_:
         json.dump(response.json(), file_)
 
-    output_path = Path(templates_dict["output_path"])
 
 def _print_launch_count(**context):
     # TODO: Finish this task. Should load the launch JSON file
     # and print the 'count' field from it's contents.
 
-    output = context['templates_dict']['output_path']
+    input_path = context['templates_dict']['input_path']
 
-    print('Number of launch is ', output['count'])
+    with input_path.open("w") as file_:
+        launches = json.load(file_)
+
+    print('Number of launch is ', launches['count'], "from", input_path )
 
 
 with DAG(
