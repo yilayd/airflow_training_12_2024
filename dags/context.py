@@ -12,12 +12,8 @@ from airflow.operators.python import PythonOperator
 def print_context_func(**context):
     pprint(context)
 
-print_context = PythonOperator(
-    task_id="print_context",
-    python_callable=print_context_func,
-)
 
-with DAG(
+my_dag = DAG(
     dag_id="context_print",
     start_date=datetime.now() - timedelta(days=4),
     schedule_interval="@daily",
@@ -25,3 +21,7 @@ with DAG(
 )
 
     
+print_context = PythonOperator(
+    task_id="print_context",
+    python_callable=print_context_func, dag = my_dag
+)
