@@ -83,6 +83,11 @@ python -m venv .venv
 ```
 
 Then
-```
+```sh
 source ./.venv/bin/activate
+```
+
+Then
+```sh
+pip install -r requirements.txt
 ```
