@@ -3,7 +3,7 @@ from airflow.models import DAG
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
 from airflow.operators.empty import EmptyOperator
-import airflow.providers.http.sensors.http
+from airflow.providers.http.sensors.http import HttpSensor
 
 
 with DAG(
