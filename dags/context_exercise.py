@@ -43,6 +43,6 @@ with DAG(
 
     launch_data = PythonOperator(task_id = 'fetch_launch_data', python_callable = _download_launches)
 
-    launch_count = PythonOperator(task_id = 'fetch_launch_data', python_callable = _print_launch_count)
+    launch_count = PythonOperator(task_id = 'count_launch', python_callable = _print_launch_count)
 
     print_date >> download_launches >> check_for_launches
