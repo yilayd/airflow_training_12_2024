@@ -12,8 +12,7 @@ API_URL = "https://lldev.thespacedevs.com/2.3.0/launches"
 
 def _download_launches(**context):
     templates_dict = context["templates_dict"]
-    output_path = Path(templates_dict["output_path"])
-
+    
     response = requests.get(
         API_URL,
         params={
@@ -26,6 +25,8 @@ def _download_launches(**context):
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with output_path.open("w") as file_:
         json.dump(response.json(), file_)
+
+    output_path = Path(templates_dict["output_path"])
 
 def _print_launch_count(**context):
     # TODO: Finish this task. Should load the launch JSON file
