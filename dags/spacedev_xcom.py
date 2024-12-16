@@ -38,7 +38,7 @@ def _print_launch_count(**context):
 
 with DAG(
     dag_id="context_exercise_xcom",
-    start_date=airflow.utils.dates.days_ago(7),
+    start_date=datetime.now() - timedelta(days=10),
     schedule_interval="@daily",
 ):
 
