@@ -11,17 +11,17 @@ with DAG(
     schedule = '@daily',
 ):
 
-    procure_rocket_material = EmptyOperator(task_id = 'Rocket material is procured') 
+    procure_rocket_material = EmptyOperator(task_id = 'rocket_material_is_procured') 
     
-    procure_fuel = EmptyOperator(task_id = 'Rocket is fueled') 
+    procure_fuel = EmptyOperator(task_id = 'rocket_is_fueled') 
 
-    build_stage_1 = EmptyOperator(task_id = 'Building stage 1') 
+    build_stage_1 = EmptyOperator(task_id = 'building_stage_1') 
 
-    build_stage_2 = EmptyOperator(task_id = 'Building stage 2') 
+    build_stage_2 = EmptyOperator(task_id = 'building_stage_2') 
 
-    build_stage_3 = EmptyOperator(task_id = 'Building stage 3') 
+    build_stage_3 = EmptyOperator(task_id = 'building_stage_3') 
 
-    launch = EmptyOperator(task_id = 'Ready to launch!')
+    launch = EmptyOperator(task_id = 'launching')
 
 
     procure_rocket_material >> [build_stage_1, build_stage_2, build_stage_3] >> launch
