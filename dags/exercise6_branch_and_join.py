@@ -31,4 +31,4 @@ with DAG(
     daily_tasks = [EmptyOperator(task_id=f"{day}") for day in days]    
          
     next_task = EmptyOperator(task_id='next', trigger_rule = 'none_failed_min_one_success')
-    branching >>daily_task >>next_task 
+    branching >> daily_tasks >> next_task 
