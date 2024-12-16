@@ -9,7 +9,7 @@ with DAG(
     start_nate = datetime.now - timedelta(days=1),
     description = "Empty operators",
     schedule = '@daily'
-)
+):
 
     procure_rocket_material = EmptyOperator(task_id = 'Rocket material is procured') 
     
