@@ -48,8 +48,10 @@ with DAG(
 
     echo_logical_date = BashOperator(task_id = 'print_logical_date', bash_command = "echo {{ ts }}")
 
-    launch_data = PythonOperator(task_id = 'fetch_launch_data', python_callable = _download_launches)
+    launch_data = PythonOperator(task_id = 'fetch_launch_data', python_callable = _download_launches, templates_dict = {"output_path": "/tmp/launches/2021-01-01.json",
+            "window_start": "2021-01-01T00:00:00Z",
+            "window_end": "2021-01-02T00:00:00Z",})
 
-    launch_count = PythonOperator(task_id = 'count_launch', python_callable = _print_launch_count)
+    launch_count = PythonOperator(task_id = 'count_launch', python_callable = _print_launch_count, templates_dict = {"input_path": "/tmp/launches/2021-01-02.json"})
 
     echo_logical_date >> launch_data >> launch_count
