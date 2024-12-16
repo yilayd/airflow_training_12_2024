@@ -3,7 +3,7 @@ from airflow.models import DAG
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
 from airflow.operators.empty import EmptyOperator
-from airflow.operators.BaseOperator import BaseOperator
+from airflow.operators.TaskInstance import TaskInstance as ti
 
 
 API_URL = "https://lldev.thespacedevs.com/2.3.0/launches"
