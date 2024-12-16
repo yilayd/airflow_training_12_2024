@@ -21,7 +21,7 @@ with DAG(
 
     python = PythonOperator(task_id = 'python1', python_callable = some_function)
 
-    python2  = [PythonOperator(task_id = f"python{i}", python_callable = lambda: print(f"{i})" )) for i in range(2,10,2)]
+    python2  = [PythonOperator(task_id = f"python{i}", python_callable = lambda: print(i) ) for i in range(2,10,2)]
     procure_fuel = EmptyOperator(task_id = 'rocket_is_fueled') 
 
     build_stage_1 = EmptyOperator(task_id = 'building_stage_1') 
