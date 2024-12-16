@@ -12,8 +12,8 @@ with DAG(
     schedule = "@daily",
 ):
 
-    check_data = HttpSensor(task_id = 'check_data', http_conn_id = 'http_delayed', mode = 'reschedule', endpoint = '', extra_options = {'check_response': 20000})
+    check_data = HttpSensor(task_id = 'check_data', http_conn_id = 'http_delayed', mode = 'reschedule', endpoint = '')
 
-    run_something = PythonOperator(task_id = 'doing_stuff', python_callable = lambda x: print('doing it for', {{ ts }}))
+    run_something = PythonOperator(task_id = 'doing_stuff', python_callable = lambda x: print('doing it for'))
 
     check_data >> run_something
