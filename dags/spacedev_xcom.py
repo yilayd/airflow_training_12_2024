@@ -8,7 +8,7 @@ from airflow.models.taskinstance import TaskInstance as ti
 
 API_URL = "https://lldev.thespacedevs.com/2.3.0/launches"
 
-def _download_launches(**context):
+def _download_launches(ti, **context):
     templates_dict = context["templates_dict"]
     output_path = Path(templates_dict["output_path"])
 
@@ -21,20 +21,17 @@ def _download_launches(**context):
     )
     response.raise_for_status()
 
-    output_path.parent.mkdir(parents=True, exist_ok=True)
+    ti.xcom_push(key='launch_data_x', value = json.loads(response))
 
-    with output_path.open("w") as file_:
-        json.dump(response.json(), file_)
-    ti.xcom_push(key='launch_data_x', value = output_path)
-
-def _print_launch_count(**context):
+def _print_launch_count(ti, **context):
     # TODO: Finish this task. Should load the launch JSON file
     # and print the 'count' field from it's contents.
 
-    input_path = context['templates_dict']['input_path']
+    # input_path = context['templates_dict']['input_path']
+    launches = ti.xcom_pull(task_id = 'launch_data')
 
-    print('Number of launch is ', launches['count'], "from", input_path )
-
+    print('Number of launch is ', launches['count'])
+    
 
 with DAG(
     dag_id="context_exercise_xcom",
@@ -48,6 +45,6 @@ with DAG(
             "window_start": "2021-01-01T00:00:00Z",
             "window_end": "2021-01-02T00:00:00Z",})
 
-    launch_count = PythonOperator(task_id = 'count_launch', python_callable = _print_launch_count, templates_dict = ti.xcom_pull(task_ids='launch_data'))
+    launch_count = PythonOperator(task_id = 'count_launch', python_callable = _print_launch_count)
 
     echo_logical_date >> launch_data >> launch_count
