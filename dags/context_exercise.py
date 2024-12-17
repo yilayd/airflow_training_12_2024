@@ -42,6 +42,9 @@ with DAG(
 
         print(f"""Counted {launches["count"]} launches from {input_path}""")
 
+    def print_context_func(numbers, **context):
+        print(numbers[0])
+        pprint(context)
     print_date = BashOperator(
         task_id="print_date", bash_command="echo {{ logical_date }}"
     )
