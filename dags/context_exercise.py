@@ -71,4 +71,4 @@ with DAG(
         task_id="print_context",
         python_callable=print_context_func, op_kwargs = {'numbers':[1,2,3,4]}
 )
-        print_date >> download_launches >> check_for_launches >> print_context
+    print_date >> download_launches >> check_for_launches >> print_context
