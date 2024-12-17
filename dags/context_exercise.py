@@ -24,7 +24,6 @@ with DAG(
         templates_dict = context["templates_dict"]
         output_path = Path(templates_dict["output_path"])
         own_stuff = context[templates_dict["own_stuff"]]
-        no_stuff = context["no_stuff"]
 
         response = requests.get(
             API_URL,
@@ -62,7 +61,6 @@ with DAG(
             "window_end": "{{data_interval_end | ds}}T00:00:00Z",
             "own_stuff" : "this is my own"
         },
-        no_stuff = {"this is none": "to_none"}
     )
 
     check_for_launches = PythonOperator(
