@@ -14,7 +14,6 @@ API_URL = "https://lldev.thespacedevs.com/2.3.0/launches"
 with DAG(
     dag_id="exercise_templating",
     start_date=airflow.utils.dates.days_ago(7),
-    default_args=default_args,
     schedule_interval="@daily",
 ) as dag:
 
