@@ -6,6 +6,7 @@ import requests
 from airflow.models import DAG
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
+from pprint import pprint
 
 
 API_URL = "https://lldev.thespacedevs.com/2.3.0/launches"
