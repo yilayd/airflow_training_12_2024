@@ -17,6 +17,9 @@ with DAG(
     schedule_interval="@daily",
 ) as dag:
 
+    def print_context_func(**context):
+        pprint(context)
+
     def _download_launches(**context):
         templates_dict = context["templates_dict"]
         output_path = Path(templates_dict["output_path"])
@@ -33,6 +36,7 @@ with DAG(
         output_path.parent.mkdir(parents=True, exist_ok=True)
         with output_path.open("w") as file_:
             json.dump(response.json(), file_)
+        print_context_func(context)
 
     def _print_launch_count(**context):
         input_path = context["templates_dict"]["input_path"]
@@ -41,10 +45,8 @@ with DAG(
             launches = json.load(file_)
 
         print(f"""Counted {launches["count"]} launches from {input_path}""")
+        print_context_func(context)
 
-    def print_context_func(numbers, **context):
-        print(numbers[0])
-        pprint(context)
     print_date = BashOperator(
         task_id="print_date", bash_command="echo {{ logical_date }}"
     )
@@ -65,10 +67,4 @@ with DAG(
         templates_dict={"input_path": "/tmp/launches/{{ds}}.json"},
     )
 
-
-    launch_count = PythonOperator(task_id = 'count_launch', python_callable = _print_launch_count, templates_dict = {"input_path": "/tmp/launches/2021-01-02.json"})
-    print_context = PythonOperator(
-        task_id="print_context",
-        python_callable=print_context_func, op_kwargs = {'numbers':[1,2,3,4]}
-)
-    print_date >> download_launches >> check_for_launches >> print_context
+    print_date >> download_launches >> check_for_launches
