@@ -36,7 +36,7 @@ with DAG(
         output_path.parent.mkdir(parents=True, exist_ok=True)
         with output_path.open("w") as file_:
             json.dump(response.json(), file_)
-        print_context_func(context)
+        print_context_func(**context)
 
     def _print_launch_count(**context):
         input_path = context["templates_dict"]["input_path"]
