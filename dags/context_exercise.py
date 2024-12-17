@@ -45,7 +45,7 @@ with DAG(
             launches = json.load(file_)
 
         print(f"""Counted {launches["count"]} launches from {input_path}""")
-        print_context_func(context)
+        print_context_func(**context)
 
     print_date = BashOperator(
         task_id="print_date", bash_command="echo {{ logical_date }}"
