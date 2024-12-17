@@ -69,6 +69,6 @@ with DAG(
     launch_count = PythonOperator(task_id = 'count_launch', python_callable = _print_launch_count, templates_dict = {"input_path": "/tmp/launches/2021-01-02.json"})
     print_context = PythonOperator(
         task_id="print_context",
-        python_callable=print_context_func, dag = my_dag, op_kwargs = {'numbers':[1,2,3,4]}
+        python_callable=print_context_func, op_kwargs = {'numbers':[1,2,3,4]}
 )
     echo_logical_date >> launch_data >> launch_count >> print_context
