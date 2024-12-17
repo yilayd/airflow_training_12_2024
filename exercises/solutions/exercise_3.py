@@ -1,20 +1,22 @@
 import json
 from pathlib import Path
 
-import airflow.utils.dates
-import requests
-from airflow.models import DAG
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
+from airflow.models import DAG
+import airflow.utils.dates
+import requests
 
-API_URL = "https://lldev.thespacedevs.com/2.3.0/launches"
+API_URL = "https://lldev.thespacedevs.com/2.2.0/launch"
 
+
+default_args = {"owner": "airflow", "retries": 1}
 
 with DAG(
-    dag_id="exercise3_templating",
+    dag_id="exercise_templating",
     start_date=airflow.utils.dates.days_ago(7),
+    default_args=default_args,
     schedule_interval="@daily",
-    tags=["exercise"],
 ) as dag:
 
     def _download_launches(**context):
@@ -35,30 +37,31 @@ with DAG(
             json.dump(response.json(), file_)
 
     def _print_launch_count(**context):
-        # TODO: Finish this task. Should load the launch JSON file
-        # and print the 'count' field from it's contents.
-        raise NotImplementedError()
+        input_path = context["templates_dict"]["input_path"]
 
-    # TODO: Use templating to print the actual logical date.
-    print_date = BashOperator(task_id="print_date", bash_command="echo 2021-01-01")
+        with Path(input_path).open() as file_:
+            launches = json.load(file_)
 
-    # TODO: Use data interval start and end to define window start/end + file path.
-    # Useful https://airflow.apache.org/docs/apache-airflow/stable/templates-ref.html
-    # Format for dates should be following: 2021-12-01T00:00:00Z"
+        print(f"""Counted {launches["count"]} launches from {input_path}""")
+
+    print_date = BashOperator(
+        task_id="print_date", bash_command="echo {{ logical_date }}"
+    )
+
     download_launches = PythonOperator(
         task_id="download_launches",
         python_callable=_download_launches,
         templates_dict={
-            "output_path": "/tmp/launches/2021-01-01.json",
-            "window_start": "2021-01-01T00:00:00Z",
-            "window_end": "2021-01-02T00:00:00Z",
+            "output_path": "/tmp/launches/{{ds}}.json",
+            "window_start": "{{data_interval_start | ds}}T00:00:00Z",
+            "window_end": "{{data_interval_end | ds}}T00:00:00Z",
         },
     )
 
-
-    # TODO: Complete this task.
     check_for_launches = PythonOperator(
-        task_id="check_for_launches", python_callable=_print_launch_count
+        task_id="check_for_launches",
+        python_callable=_print_launch_count,
+        templates_dict={"input_path": "/tmp/launches/{{ds}}.json"},
     )
 
     print_date >> download_launches >> check_for_launches
