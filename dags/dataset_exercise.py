@@ -13,7 +13,7 @@ with DAG(
     dag_id = 'producer',
     start_date = pendulum.today("UTC").add(days=-10),
     schedule = timedelta(seconds = 10)
-)
+):
 
     fetch = EmptyOperator(task_id="fetch")
     remove_outliers = EmptyOperator(task_id="remove_outliers")
