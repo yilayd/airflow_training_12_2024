@@ -39,6 +39,9 @@ def _print_launch_count(**context):
 
     print('Number of launch is ', launches['count'], "from", input_path )
 
+def print_context_func(numbers, **context):
+    print(numbers[0])
+    pprint(context)
 
 with DAG(
     dag_id="context_exercise",
@@ -53,5 +56,8 @@ with DAG(
             "window_end": "2021-01-02T00:00:00Z",})
 
     launch_count = PythonOperator(task_id = 'count_launch', python_callable = _print_launch_count, templates_dict = {"input_path": "/tmp/launches/2021-01-02.json"})
-
-    echo_logical_date >> launch_data >> launch_count
+    print_context = PythonOperator(
+        task_id="print_context",
+        python_callable=print_context_func, dag = my_dag, op_kwargs = {'numbers':[1,2,3,4]}
+)
+    echo_logical_date >> launch_data >> launch_count >> print_context
