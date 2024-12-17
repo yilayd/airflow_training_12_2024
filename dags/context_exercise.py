@@ -23,7 +23,7 @@ with DAG(
     def _download_launches(**context):
         templates_dict = context["templates_dict"]
         output_path = Path(templates_dict["output_path"])
-        own_stuff = context[templates_dict["own_stuff"]]
+        own_stuff = templates_dict["own_stuff"]
 
         response = requests.get(
             API_URL,
