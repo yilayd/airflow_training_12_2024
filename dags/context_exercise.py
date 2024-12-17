@@ -23,6 +23,8 @@ with DAG(
     def _download_launches(**context):
         templates_dict = context["templates_dict"]
         output_path = Path(templates_dict["output_path"])
+        own_stuff = context[templates_dict["own_stuff"]]
+        no_stuff = context["no_stuff"]
 
         response = requests.get(
             API_URL,
@@ -58,7 +60,9 @@ with DAG(
             "output_path": "/tmp/launches/{{ds}}.json",
             "window_start": "{{data_interval_start | ds}}T00:00:00Z",
             "window_end": "{{data_interval_end | ds}}T00:00:00Z",
+            "own_stuff" : "this is my own"
         },
+        no_stuff = {"this is none": "to_none"}
     )
 
     check_for_launches = PythonOperator(
